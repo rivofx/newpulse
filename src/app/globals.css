@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+
+    /* Light mode */
+    --surface-0: 210 20% 99%;
+    --surface-1: 210 20% 97%;
+    --surface-2: 210 15% 94%;
+    --surface-3: 210 12% 90%;
+    --ink: 220 25% 12%;
+    --ink-muted: 220 15% 40%;
+    --ink-subtle: 220 10% 60%;
+    --accent: 217 91% 55%;
+    --accent-muted: 217 91% 92%;
+    --border: 220 13% 88%;
+    --shadow: 220 25% 12%;
+  }
+
+  .dark {
+    --surface-0: 222 26% 9%;
+    --surface-1: 222 22% 13%;
+    --surface-2: 222 18% 17%;
+    --surface-3: 222 16% 22%;
+    --ink: 210 40% 96%;
+    --ink-muted: 210 20% 68%;
+    --ink-subtle: 210 15% 48%;
+    --accent: 217 91% 60%;
+    --accent-muted: 217 50% 20%;
+    --border: 222 16% 20%;
+    --shadow: 0 0% 0%;
+  }
+
+  * {
+    @apply border-[hsl(var(--border))];
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+  }
+
+  body {
+    @apply bg-surface-0 text-ink;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  #__next, main {
+    height: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  /* Scrollbar styling */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--surface-3)) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 4px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--surface-3));
+    border-radius: 2px;
+  }
+
+  /* Glass effect */
+  .glass {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .dark .glass {
+    background: rgba(0,0,0,0.15);
+  }
+
+  /* Input base */
+  .input-base {
+    @apply w-full bg-surface-2 border border-[hsl(var(--border))] rounded-xl px-4 py-3 text-ink placeholder:text-ink-subtle
+    focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent
+    transition-all duration-150;
+  }
+
+  /* Button base */
+  .btn-primary {
+    @apply bg-accent hover:bg-blue-500 text-white font-medium rounded-xl px-5 py-2.5
+    transition-all duration-150 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed
+    focus:outline-none focus:ring-2 focus:ring-accent/40 focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply bg-surface-2 hover:bg-surface-3 text-ink font-medium rounded-xl px-5 py-2.5
+    transition-all duration-150 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed
+    focus:outline-none focus:ring-2 focus:ring-surface-3 focus:ring-offset-2;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent hover:bg-surface-2 text-ink-muted hover:text-ink rounded-xl px-3 py-2
+    transition-all duration-150 active:scale-[0.98]
+    focus:outline-none focus:ring-2 focus:ring-surface-3;
+  }
+
+  /* Message bubble */
+  .bubble-mine {
+    @apply bg-accent text-white rounded-2xl rounded-br-sm px-4 py-2.5 max-w-[75%] break-words;
+    background: linear-gradient(135deg, hsl(217, 91%, 55%), hsl(220, 90%, 60%));
+  }
+
+  .bubble-theirs {
+    @apply bg-surface-2 text-ink rounded-2xl rounded-bl-sm px-4 py-2.5 max-w-[75%] break-words;
+  }
+
+  /* Sidebar item */
+  .sidebar-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-xl cursor-pointer
+    hover:bg-surface-2 transition-colors duration-100 text-ink-muted hover:text-ink
+    focus:outline-none focus:bg-surface-2;
+  }
+
+  .sidebar-item.active {
+    @apply bg-accent-muted text-accent font-medium;
+  }
+
+  /* Avatar */
+  .avatar {
+    @apply rounded-full flex items-center justify-center font-semibold text-white flex-shrink-0 overflow-hidden;
+    font-family: var(--font-display);
+  }
+
+  /* Typing indicator dots */
+  .typing-dot {
+    @apply w-2 h-2 rounded-full bg-ink-subtle animate-pulse-dot;
+  }
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  /* Skeleton */
+  .skeleton {
+    @apply bg-surface-2 animate-pulse rounded-lg;
+  }
+
+  /* Unread badge */
+  .unread-badge {
+    @apply bg-accent text-white text-xs font-semibold rounded-full
+    min-w-[18px] h-[18px] flex items-center justify-center px-1;
+    font-family: var(--font-display);
+  }
+
+  /* Online indicator */
+  .online-dot {
+    @apply w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-surface-0;
+  }
+
+  /* Toast */
+  .toast-container {
+    @apply fixed bottom-4 right-4 z-50 flex flex-col gap-2;
+  }
+
+  .toast {
+    @apply bg-surface-1 border border-[hsl(var(--border))] shadow-lg rounded-xl px-4 py-3
+    flex items-center gap-3 min-w-[280px] animate-slide-up;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--accent)), hsl(280, 80%, 60%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
